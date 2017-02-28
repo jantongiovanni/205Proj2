@@ -3,20 +3,43 @@
 from Circle import Circle
 import numpy
 import cv2
+import random
 
 from PIL import Image
 from numpy import array
 
 circles = []
 
-circles.append(Circle(200, 200))
+bWidth = 360
+bHeight = 640
 
+width = 640
+height = 360
+
+def newCircle():
+    for i in range (0,10):
+        randY = random.randint(0, bWidth)
+        randX = random.randint(0, bHeight)
+        # print "x: " + str(randX) + " y: " + str(randY)
+        circles.append(Circle(randX, randY))
+
+
+    
+# for i in range (0,5):
+#     randX = random.randint(0, width)
+#     randY = random.randint(0, height)
+    
+#     circles.append(Circle(randX, randY))
+
+newCircle()
+
+# for p in circles: print p.growing
 
 
 # c = Circle(200, 200)
 
 # Create a black image
-newImg = numpy.zeros((360,640,3), numpy.uint8)
+newImg = numpy.zeros((bWidth,bHeight,3), numpy.uint8)
 
 img = Image.fromarray(newImg)
 img.save("black.png")
@@ -26,9 +49,12 @@ img = Image.open("black.png")
 arr = array(img)
 
 for currC in circles:
-    currC.dimensions(360, 640)
+    currC.dimensions(width, height)
     currC.numpyArray(arr)
+    # print "x: " + str(currC.x) + " y: " + str(currC.y)
     while (currC.growing):
+        # print "edge: " + str(currC.edges())
+        
         currC.grow()
         if currC.edges():
             currC.growing = False
@@ -41,6 +67,7 @@ for currC in circles:
 
 img = Image.fromarray(arr)
 img.save("third.png")
+
 
 
 # -----------------------------------works-------------------------------------------

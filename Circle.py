@@ -6,7 +6,7 @@ class Circle:
     def __init__(self, x, y): #constructor
         self.x = x
         self.y = y
-        self.r = 50
+        self.r = 1
         self.growing = True
         
     def numpyArray(self, array):
