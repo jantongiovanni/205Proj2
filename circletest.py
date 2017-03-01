@@ -8,6 +8,8 @@ import random
 from PIL import Image
 from numpy import array
 
+import math
+
 circles = []
 
 bWidth = 360
@@ -20,8 +22,20 @@ def newCircle():
     for i in range (0,10):
         randY = random.randint(0, bWidth)
         randX = random.randint(0, bHeight)
+        
+        valid = True
+        for c in circles:
+            d = math.hypot(c.x - randX, c.y - randY)
+            if (d < c.r):
+                valid = False
+                break
+        
         # print "x: " + str(randX) + " y: " + str(randY)
-        circles.append(Circle(randX, randY))
+        if valid:
+            # return Circle(randX, randY)
+            circles.append(Circle(randX, randY))
+        # else:
+            # return None
 
 
     
@@ -32,6 +46,9 @@ def newCircle():
 #     circles.append(Circle(randX, randY))
 
 newCircle()
+
+# if c != None:
+#     circles.append(c)
 
 # for p in circles: print p.growing
 
@@ -58,6 +75,14 @@ for currC in circles:
         currC.grow()
         if currC.edges():
             currC.growing = False
+        else:
+            for other in circles:
+                if currC != other:
+                    d = math.hypot(currC.x - other.x, currC.y - other.y)
+                    if (d - 1 < currC.r + other.r):
+                        currC.growing = False
+                        break
+                
     currC.draw(arr)
 
 # c.numpyArray(arr)
