@@ -11,17 +11,22 @@ from numpy import array
 import math
 
 circles = []
+posSpots = []
 
-bWidth = 360
-bHeight = 640
+bWidth = 400
+bHeight = 900
 
-width = 640
-height = 360
+width = 900
+height = 400
 
 def newCircle():
-    for i in range (0,10):
-        randY = random.randint(0, bWidth)
-        randX = random.randint(0, bHeight)
+    for i in range (0,1000):
+        slot = random.randint(0, len(posSpots))
+        x, y = posSpots[slot]
+        # randY = random.randint(0, bWidth)
+        # randX = random.randint(0, bHeight)
+        randX = x
+        randY = y
         
         valid = True
         for c in circles:
@@ -34,8 +39,8 @@ def newCircle():
         if valid:
             # return Circle(randX, randY)
             circles.append(Circle(randX, randY))
-        # else:
-            # return None
+        else:
+            i -= 1
 
 
     
@@ -45,7 +50,7 @@ def newCircle():
     
 #     circles.append(Circle(randX, randY))
 
-newCircle()
+
 
 # if c != None:
 #     circles.append(c)
@@ -61,9 +66,21 @@ newImg = numpy.zeros((bWidth,bHeight,3), numpy.uint8)
 img = Image.fromarray(newImg)
 img.save("black.png")
 
+img = Image.open("2017.png")
+
 # get a numpy array from an image
-img = Image.open("black.png")
-arr = array(img)
+imgBlack = Image.open("black.png")
+arr = array(imgBlack)
+
+for x in range(0, width):
+    for y in range(0, height):
+        red, green, blue = img.getpixel((x,y))
+        if (red == 255) and (green == 255) and (blue == 255):
+            posSpots.append((x,y))
+            
+print len(posSpots)
+
+newCircle()
 
 for currC in circles:
     currC.dimensions(width, height)
@@ -91,7 +108,7 @@ for currC in circles:
 # get an image from a numpy array
 
 img = Image.fromarray(arr)
-img.save("third.png")
+img.save("fourth.png")
 
 
 
