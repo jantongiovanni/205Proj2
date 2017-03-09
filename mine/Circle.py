@@ -3,18 +3,19 @@ from PIL import Image
 import cv2
 
 class Circle:
-    def __init__(self, x, y): #constructor
+    def __init__(self, x, y, c): #constructor
         self.x = x
         self.y = y
         self.r = 1
         self.growing = True
+        self.c = c
         
     def numpyArray(self, array):
         self.array = array
         return self.array
         
     def draw(self, array):
-        cv2.circle(array,(self.x,self.y), self.r, (0,0,255), 1)
+        cv2.circle(array,(self.x,self.y), self.r, self.c, -1)
         
     def modNumArray(self):
         return self.array

@@ -11,22 +11,23 @@ from numpy import array
 import math
 
 circles = []
-posSpots = []
+# posSpots = []
 
-bWidth = 400
-bHeight = 900
+bWidth = 768
+bHeight = 1024
 
-width = 900
-height = 400
+width = 1024
+height = 768
 
 def newCircle():
-    for i in range (0,1000):
-        slot = random.randint(0, len(posSpots))
-        x, y = posSpots[slot]
-        # randY = random.randint(0, bWidth)
-        # randX = random.randint(0, bHeight)
-        randX = x
-        randY = y
+    for i in range (0,3000):
+        # slot = random.randint(0, len(posSpots))
+        # x, y = posSpots[slot]
+        randY = random.randint(0, 767)
+        randX = random.randint(0, 1023)
+        # print "x " + str(randX) + " y " + str(randY)
+        # randX = x
+        # randY = y
         
         valid = True
         for c in circles:
@@ -37,8 +38,9 @@ def newCircle():
         
         # print "x: " + str(randX) + " y: " + str(randY)
         if valid:
+            red, green, blue = img.getpixel((randX,randY))
             # return Circle(randX, randY)
-            circles.append(Circle(randX, randY))
+            circles.append(Circle(randX, randY, (red, green, blue)))
         else:
             i -= 1
 
@@ -66,19 +68,19 @@ newImg = numpy.zeros((bWidth,bHeight,3), numpy.uint8)
 img = Image.fromarray(newImg)
 img.save("black.png")
 
-img = Image.open("2017.png")
+img = Image.open("birdoriginal.jpg")
 
 # get a numpy array from an image
 imgBlack = Image.open("black.png")
 arr = array(imgBlack)
 
-for x in range(0, width):
-    for y in range(0, height):
-        red, green, blue = img.getpixel((x,y))
-        if (red == 255) and (green == 255) and (blue == 255):
-            posSpots.append((x,y))
+# for x in range(0, width):
+#     for y in range(0, height):
+#         red, green, blue = img.getpixel((x,y))
+#         if (red == 255) and (green == 255) and (blue == 255):
+#             posSpots.append((x,y))
             
-print len(posSpots)
+# print len(posSpots)
 
 newCircle()
 
@@ -108,7 +110,7 @@ for currC in circles:
 # get an image from a numpy array
 
 img = Image.fromarray(arr)
-img.save("fourth.png")
+img.save("fifth.png")
 
 
 
