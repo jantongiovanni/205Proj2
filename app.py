@@ -3,7 +3,9 @@ import flask
 from flask import request, redirect, url_for
 from werkzeug.utils import secure_filename
 from flask import send_from_directory
+import cairo_proj
 import cairo
+import shutil
 
 UPLOAD_FOLDER = 'static/uploads'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
@@ -31,16 +33,12 @@ def index():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            # return redirect(url_for('uploaded_file', filename=filename))
-            # cairo.imageSrc(UPLOAD_FOLDER+'/'+filename)
-            # cairo.main()
-            newFile = cairo.getNewFile()
+            # # return redirect(url_for('uploaded_file', filename=filename))
+            cairo_proj.imageSrc(UPLOAD_FOLDER+'/'+filename)
+            cairo_proj.main()
+            newFile = cairo_proj.getNewFile()
+            # shutil.move("out.png", "static/circlePacked/"+newFile)
             return flask.render_template("index.html", filename=filename, newFile=newFile)
-        # if filename:
-        #     cairo.imageSrc(UPLOAD_FOLDER+'/'+filename)
-        #     cairo.main()
-        #     newFile = cairo.getNewFile()
-        #     return flask.render_template("index.html", filename=filename, newFile=newFile)
     return flask.render_template("index.html")
     
     

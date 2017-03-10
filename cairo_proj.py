@@ -1,41 +1,40 @@
 #!/usr/bin/python
-# # -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 from __future__ import print_function
 from __future__ import division
 
-import cairo
-
 from PIL import Image
 from random import random
-
-# import sys
-
-# modulename = 'cairo'
-# if modulename not in sys.modules:
-#     print "You have not imported the {} module".format(modulename)
-
-# if modulename in sys.modules:
-#   print " yes " + format(modulename)
-
-
+import cairo
+import shutil
 
 myList = []
-#  original
-# myList.append(Image.open('bird.jpg'))
+# print("Input complete image filename: ")
+# image = raw_input();
+# myList.append(Image.open(image))
 # width, height  = myList[0].size
-
 PI = 3.14159265359
 TWOPI = 2.0*PI
-BACK = [1,1,1,1]
+BACK = [0,0,0,1]
 FRONT = [0,0,0,1.0]
 SIZE = 1000
-ONE = 1./SIZE
+ONE = 1/SIZE
 LINEWIDTH = ONE
 
 STEPS = 1000
 
 NEW_COUNT = 100
+
+
+# #STEPS = 250
+# #NEW_COUNT = 600
+# print("Input for steps and new circles. Higher values will take longer but will generate more complex and detailed images")
+# print("Input number of steps to execute (recommended values between 100 - 300) : ")
+# STEPS = input();
+# print("Input number of new circles generated at each step (recommended values between 100 and 500) : ")
+# NEW_COUNT = input();
+
 
 RES = 'out.png'
 
@@ -44,17 +43,19 @@ def getNewFile():
 
 def imageSrc(msg):
     myList.append(Image.open(msg))
+    global width
+    global height
     width, height  = myList[0].size
 
 def is_ok(x1, y1, r1, x2, y2, r2):
-  return ((x1-x2)**2 + (y1-y2)**2) > (r1 + r2 + 2*ONE)**2
+  return ((x1-x2)**2 + (y1-y2)**2) > (r1 + r2 + ONE)**2
 
 def add_new_circles(n, circles):
 
   for i in xrange(n):
     xn = random()
     yn = random()
-    rn = ONE#*.5
+    rn = ONE
 
     ok = True
     for c in circles:
@@ -105,44 +106,17 @@ def show(ctx, circles):
   ctx.set_source_rgba(*FRONT)
 
   for c in circles:
+    r, g, b = myList[0].getpixel((c['x'] * width, c['y'] * height))
+    rgba = [r/256, g/256, b/256, 1.0]
+    ctx.set_source_rgba(*rgba)
     ctx.arc(c['x'], c['y'], c['r'], 0, TWOPI)
-    ctx.stroke()
-
-  # # if you want random colors try this instead:
-
-  # for c in circles:
-
-    # rgba = [random(), random(), random(), 1.0]
-    # ctx.set_source_rgba(*rgba)
-    # ctx.arc(c['x'], c['y'], c['r'], 0, TWOPI)
-    # ctx.stroke()
-
-  # # you can also draw lines like this:
-
-  # # start drawing
-  # ctx.move_to(x, y)
-
-  # # draw line:
-  # ctx.line_to(x1, y1)
-
-  # #draw line:
-  # ctx.line_to(x2, y2)
-
-  # # line is not visible until you do
-  # ctx.stroke()
-
-  # # similarly you can use:
-  # ctx.fill()
-
-  # # to fill in a shape, instead of drawing its outline.
-
-  # note: you can combine line_to, move_to and arc to make more complex shapes.
-  
+    ctx.fill()
 
 def main():
 
   # make the canvas
   sur = cairo.ImageSurface(cairo.FORMAT_ARGB32, SIZE, SIZE)
+  #sur = cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
   ctx = cairo.Context(sur)
 
   # scale canvas so that x and y ranges from 0 to 1.
@@ -150,7 +124,7 @@ def main():
   #ctx.scale(width, heigth)
   # set the background color of the canvas
   ctx.set_source_rgba(*BACK)
-  ctx.rectangle(0.0, 0.0, 1.0, 1.0)
+  ctx.rectangle(0, 0, 1.0, 1.0)
   ctx.fill()
 
   ctx.set_line_width(LINEWIDTH)
@@ -166,15 +140,20 @@ def main():
     ok_count = test(circles)
 
     if ok_count < 1:
-
       add_new_circles(NEW_COUNT, circles)
-
       print(i, 'adding new circles, total count: ' + str(len(circles)))
+    
+    
+    
 
   show(ctx, circles)
 
   sur.write_to_png(RES)
-
+  shutil.move(RES, "static/circlePacked/"+RES)
+  
 
 if __name__ == '__main__':
   main()
+  
+print("Image generated! Thank you for using the program!")
+#400, 400 1:50
