@@ -2,20 +2,22 @@
 <html>
     <head>
         
-        
+        <link rel="stylesheet" type="text/css" href="../static/main.css">
         <title>Project 2</title>
     </head>
     <body>
         <h>Uploading image...</h>
         <form method=post enctype=multipart/form-data>
+            {% if error %} <p>{{error}}</p> {% endif %}
+            <p>Steps: <input type=text size=30 name=steps> New Count: <input type=text size=30 name=count> Radius: <input type=text size=30 name=radius></p>
           <p><input type=file name=file>
              <input type=submit value=Upload>
         </form>
         {% if filename %}
-        <img src="../static/uploads/{{ filename }}" />
+        <img id="maxW" src="../static/uploads/{{ filename }}" />
         {% endif %}
         {% if newFile %}
-        <img src="../static/circlePacked/{{ newFile }}" />
+        <img id="maxW" src="../static/circlePacked/{{ newFile }}" />
         {% endif %}
     </body>
 </html>

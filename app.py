@@ -31,14 +31,20 @@ def index():
             flask.flash('No selected file')
             return redirect(request.url)
         if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            # # return redirect(url_for('uploaded_file', filename=filename))
-            cairo_proj.imageSrc(UPLOAD_FOLDER+'/'+filename)
-            cairo_proj.main()
-            newFile = cairo_proj.getNewFile()
-            # shutil.move("out.png", "static/circlePacked/"+newFile)
-            return flask.render_template("index.html", filename=filename, newFile=newFile)
+            if request.form['steps'] and request.form['count'] and request.form['radius']:
+                steps = request.form['steps']
+                # print steps
+                filename = secure_filename(file.filename)
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                # # return redirect(url_for('uploaded_file', filename=filename))
+                cairo_proj.imageSrc(UPLOAD_FOLDER+'/'+filename)
+                cairo_proj.main()
+                newFile = cairo_proj.getNewFile()
+                # shutil.move("out.png", "static/circlePacked/"+newFile)
+                return flask.render_template("index.html", filename=filename, newFile=newFile)
+            else:
+                error = "Please fill out the form"
+                return flask.render_template("index.html", error=error)
     return flask.render_template("index.html")
     
     
