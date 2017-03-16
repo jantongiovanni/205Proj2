@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <link rel="stylesheet" type="text/css" href="../../static/main.css">
+        <title>Project 2</title>
+    </head>
+    <body>
+        {% if filename %}
+        <img id="maxW" src="../../static/uploads/{{ filename }}" />
+        {% endif %}
+        {% if newFile %}
+        <img id="maxW" src="../../static/circlePacked/{{ newFile }}" />
+        {% endif %}
+    </body>
+</html>

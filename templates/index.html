@@ -9,7 +9,9 @@
         <h>Uploading image...</h>
         <form method=post enctype=multipart/form-data>
             {% if error %} <p>{{error}}</p> {% endif %}
-            <p>Steps: <input type=number size=30 name=steps> New Count: <input type=number size=30 name=count> Radius: <input type=number size=30 name=radius></p>
+            <p>Try 400 400 .005 2 for an overlapping circle image, 400 400 .01 1 for normal</p>
+            <p>Higher values will take longer but will generate more complex and detailed images</p>
+            <p>Steps (recommended: 400): <input type=number size=30 name=steps> New Count (recommended: 400): <input type=number size=30 name=count> Radius (recommended: 0.01): <input type=number step="any" min="0" size=30 name=radius> Overlap value (1 for none, 2 for max): <input type=number min="1" max="2" size=30 name=overlap></p>
           <p><input type=file name=file>
              <input type=submit value=Upload>
         </form>

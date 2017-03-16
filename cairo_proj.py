@@ -5,9 +5,10 @@ from __future__ import print_function
 from __future__ import division
 
 from PIL import Image
-from random import random
+from random import random, randrange
 import cairo
 import shutil
+import time
 
 #UPLOADED IMAGE SHOULD BE SQUARE FOR CORRECT SCALING
 
@@ -19,16 +20,16 @@ myList = [] #stores image
 PI = 3.14159265359
 TWOPI = 2.0*PI
 BACK = [0,0,0,1] #background image
-FRONT = [0,0,0,1.0] #default color of circle
+FRONT = [0,0,0,1] #default color of circle
 SIZE = 1000
 ONE = 1/SIZE
 LINEWIDTH = ONE
 
-STEPS = 1000 #steps controls potential max size of circles
+# STEPS = 1000 #steps controls potential max size of circles
 
-NEW_COUNT = 100 #new_count controls number of new cicles added per instance
+# NEW_COUNT = 100 #new_count controls number of new cicles added per instance
 
-RADIUS = 5; #radius sets the default smallest circle radius, smaller numbers will generate images with tiny circles
+# RADIUS = 5; #radius sets the default smallest circle radius, smaller numbers will generate images with tiny circles
 
 # #STEPS = 250
 # #NEW_COUNT = 600
@@ -39,10 +40,36 @@ RADIUS = 5; #radius sets the default smallest circle radius, smaller numbers wil
 # NEW_COUNT = input();
 
 
-RES = 'out.png' #name of output image
+
+
+def getTimeStamp():
+  return randrange(0, 1000)
+  
+# RES = str(randrange(0, 1000))+'.png' #name of output image
+
+def makeNewImg():
+  global RES
+  RES = str(randrange(0, 1000))+'.png'
+  print(RES + " MAKE")
 
 def getNewFile():
   return RES
+  
+def setSteps(num):
+  global STEPS
+  STEPS = num
+
+def setCount(num):
+  global NEW_COUNT
+  NEW_COUNT = num
+  
+def setRadius(num):
+  global RADIUS
+  RADIUS = num
+  
+def setOverlap(num):
+  global OVERLAP
+  OVERLAP = num
 
 def imageSrc(msg):
     myList.append(Image.open(msg))
@@ -60,8 +87,8 @@ def add_new_circles(n, circles):  #method to add new circles, n is new_count to 
   for i in xrange(n): #picks random x and y
     xn = random()
     yn = random()
-    rn = ONE
-    # rn = RADIUS
+    # rn = ONE
+    rn = RADIUS
 
     ok = True
     for c in circles:
@@ -82,7 +109,8 @@ def increase_radius(circles): #as program runs, increase the potential size of c
 
   for c in circles: 
     if c['active']:
-      c['r'] += ONE #adds .001 to radius size
+      # c['r'] += ONE #adds .001 to radius size
+      c['r'] += ONE + ONE #adds .001 to radius size
 
 def test(circles): #no clue --------------------
 
@@ -115,19 +143,16 @@ def show(ctx, circles):
     r, g, b = myList[0].getpixel((c['x'] * width, c['y'] * height)) #grabs rgb value from image
     rgba = [r/256, g/256, b/256, 1.0]  #formats rgb values
     ctx.set_source_rgba(*rgba) #assigns rgb value
-    ctx.arc(c['x'], c['y'], c['r'], 0, TWOPI) #creates circle
+    ctx.arc(c['x'], c['y'], c['r'] * OVERLAP, 0, TWOPI) #creates circle
     ctx.fill() #fills with correct rgb value
 
 def main():
-
   # make the canvas
   sur = cairo.ImageSurface(cairo.FORMAT_ARGB32, SIZE, SIZE)
-  #sur = cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
   ctx = cairo.Context(sur)
 
   # scale canvas so that x and y ranges from 0 to 1.
   ctx.scale(SIZE, SIZE)
-  #ctx.scale(width, heigth)
   # set the background color of the canvas
   ctx.set_source_rgba(*BACK)
   ctx.rectangle(0, 0, 1.0, 1.0)
@@ -154,12 +179,11 @@ def main():
 
   show(ctx, circles)
 
-  sur.write_to_png(RES)
-  shutil.move(RES, "static/circlePacked/"+RES)
+  sur.write_to_png(getNewFile())
+  shutil.move(getNewFile(), "static/circlePacked/"+getNewFile())
   
 
 if __name__ == '__main__':
   main()
   
-print("Image generated! Thank you for using the program!")
-#400, 400 1:50
+# print("Image generated! Thank you for using the program!")
