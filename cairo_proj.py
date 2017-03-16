@@ -139,7 +139,7 @@ def increase_radius(circles): #as program runs, increase the potential size of c
       # c['r'] += ONE #adds .001 to radius size
       c['r'] += ONE + ONE #adds .001 to radius size
 
-def test(circles): #no clue --------------------
+def test(circles): #tests to check if new circles aren't being created inside a growing circle
 
   ok_count = 0
 
