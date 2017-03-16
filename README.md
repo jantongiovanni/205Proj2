@@ -21,7 +21,7 @@ python app.py
 You'll get the C9 url, open it up and fill out the form.
 However, due to some weird reason through C9, everytime you want to upload a new image, you must re-run app.py for proper function.
 
-If you don't want to run Flask/GUI system: python cairo_proj.py
+If you don't want to run Flask/GUI system: python cairo_proj.py ONLY!!!! if you uncomment the code that allows you to ignore the GUI
 
 ## Link to GitHub repository
 Use the code under the maria branch. Joseph and Maria have worked on different branches and have commited to them several times. But Maria was in charge of putting it all together.

@@ -45,21 +45,6 @@ LINEWIDTH = ONE
 # #STEPS = 250
 # #NEW_COUNT = 600
 
-
-# # uncomment if you don't want GUI review the README first ------------------------------------
-# print("Input complete image filename: ")
-# image = raw_input();
-# myList.append(Image.open(image))
-# width, height  = myList[0].size
-# print("Input for steps and new circles. Higher values will take longer but will generate more complex and detailed images")
-# print("Input number of steps to execute (recommended values between 100 - 300) : ")
-# STEPS = input();
-# print("Input number of new circles generated at each step (recommended values between 100 and 500) : ")
-# NEW_COUNT = input();
-# # --------------------------------------------------------------------------------------------
-
-
-
   
 # Maria worked only in this section ----------------------------------------------------------
 
@@ -93,6 +78,30 @@ def imageSrc(msg):
     global height
     width, height  = myList[0].size #size of image
 #-------------------------------------------------------------------------------------- 
+
+
+# # uncomment if you don't want GUI review the README first ------------------------------------
+# makeNewImg()
+# print("Input complete image filename: ")
+# image = raw_input();
+
+# #UPLOADED IMAGE SHOULD BE SQUARE FOR CORRECT SCALING
+
+# myList.append(Image.open(image))
+# width, height  = myList[0].size #size of image
+
+# print("try 400 400 .005 2 for overlapping circle image, 400 400 .01 1 for normal")
+
+# print("Input for steps and new circles. Higher values will take longer but will generate more complex and detailed images")
+# print("Input number of steps to execute (recommended value: 400) : ")
+# STEPS = input();
+# print("Input number of new circles generated at each step (recommended value: 400) : ")
+# NEW_COUNT = input();
+# print("Input starting radius of cirlces (recommended value: .01)")
+# RADIUS = float(input());
+# print("circle overlap value: 1 for none, 2 for max")
+# OVERLAP = float(input());
+# # --------------------------------------------------------------------------------------------
     
 
 def is_ok(x1, y1, r1, x2, y2, r2):  #checks if a new cicle to be added will not overlap with any other circles
