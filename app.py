@@ -1,3 +1,12 @@
+# CST 205 Section 2
+# app.py
+
+# has Flask and uploads the desired image to begin conversion
+
+# Maria Loza
+
+# 15 March 2017
+
 import os
 import flask
 from flask import request, redirect, url_for

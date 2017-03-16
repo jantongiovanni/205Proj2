@@ -1,3 +1,15 @@
+# CST 205 Section 2
+# cairo_proj.py
+
+# This file converts a photo into a circle packed themed.
+
+# Joseph Antongiovanni, there are only 7 functions that Maria Loza worked on. 
+# Everything else was from Joseph.
+
+# 15 March 2017
+
+
+
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
@@ -13,10 +25,7 @@ import time
 #UPLOADED IMAGE SHOULD BE SQUARE FOR CORRECT SCALING
 
 myList = [] #stores image
-# print("Input complete image filename: ")
-# image = raw_input();
-# myList.append(Image.open(image))
-# width, height  = myList[0].size
+
 PI = 3.14159265359
 TWOPI = 2.0*PI
 BACK = [0,0,0,1] #background image
@@ -33,19 +42,24 @@ LINEWIDTH = ONE
 
 # #STEPS = 250
 # #NEW_COUNT = 600
+
+
+# # uncomment if you don't want GUI review the README first ------------------------------------
+# print("Input complete image filename: ")
+# image = raw_input();
+# myList.append(Image.open(image))
+# width, height  = myList[0].size
 # print("Input for steps and new circles. Higher values will take longer but will generate more complex and detailed images")
 # print("Input number of steps to execute (recommended values between 100 - 300) : ")
 # STEPS = input();
 # print("Input number of new circles generated at each step (recommended values between 100 and 500) : ")
 # NEW_COUNT = input();
+# # --------------------------------------------------------------------------------------------
 
 
 
-
-def getTimeStamp():
-  return randrange(0, 1000)
   
-# RES = str(randrange(0, 1000))+'.png' #name of output image
+# Maria worked only in this section ----------------------------------------------------------
 
 def makeNewImg():
   global RES
@@ -76,6 +90,8 @@ def imageSrc(msg):
     global width
     global height
     width, height  = myList[0].size #size of image
+#-------------------------------------------------------------------------------------- 
+    
 
 def is_ok(x1, y1, r1, x2, y2, r2):  #checks if a new cicle to be added will not overlap with any other circles
   return ((x1-x2)**2 + (y1-y2)**2) > (r1 + r2 + ONE)**2
